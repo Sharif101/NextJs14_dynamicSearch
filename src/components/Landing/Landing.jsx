@@ -1,0 +1,19 @@
+import Link from "next/link";
+import React from "react";
+
+export default function Landing() {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1>This is NextJs landing page</h1>
+      <Link href="/user" className="underline underline-offset-1">
+        server side
+      </Link>
+      <Link href="/todo" className="underline underline-offset-1">
+        client side
+      </Link>
+      <Link href="/clinic" className="underline underline-offset-1">
+        Clinic
+      </Link>
+    </div>
+  );
+}

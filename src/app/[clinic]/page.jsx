@@ -1,9 +1,9 @@
 import { Clinic } from "@/components";
 import React from "react";
 
-async function fetchClinics(search = "") {
+async function fetchClinics(search = "", limit = 10, skip) {
   const res = await fetch(
-    `https://hx-dev-api.healthxbd.com/api/v1/test-provider/guardian?name=${search}&skip=0&limit=10`,
+    `https://hx-dev-api.healthxbd.com/api/v1/test-provider/guardian?name=${search}&skip=${skip}&limit=${limit}`,
     {
       cache: "no-store",
     }
@@ -14,10 +14,18 @@ async function fetchClinics(search = "") {
   return res.json();
 }
 
-export default async function page({ params, searchParams }) {
-  const data = await fetchClinics(searchParams.query);
+export default async function page({ searchParams }) {
+  // Extract the `name` parameter from searchParams
+  const { name = "", page = "1", limit = "10" } = searchParams;
 
-  console.log(searchParams.query);
+  // Parse and calculate pagination values
+  const pageNum = Number(page) || 1;
+  const limitNum = Number(limit) || 10;
+  const skip = (pageNum - 1) * limitNum;
+  // Fetch data based on the `name` parameter
+  const data = await fetchClinics(name, limitNum, skip);
+
+  console.log("Search Params:", searchParams);
 
   return (
     <div>

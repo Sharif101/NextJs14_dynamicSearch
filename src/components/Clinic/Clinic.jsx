@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Clinic({ data }) {
   const router = useRouter();
@@ -14,15 +14,25 @@ export default function Clinic({ data }) {
     limit: 10,
   });
 
+  const [debouncedName, setDebouncedName] = useState(query.name);
+
   const handleChange = (key, value) => {
     const updateValue = { ...query, [key]: value };
     setQuery(updateValue);
 
-    // Convert the query object into a query string
     const queryString = new URLSearchParams(updateValue).toString();
-    // Ensure the path passed to router.replace is always a string
     router.replace(`/clinic?${queryString}`, { scroll: false });
   };
+
+  // Debounce logic
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      handleChange("name", debouncedName);
+    }, 200);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [debouncedName]);
 
   return (
     <div className="w-[90%] mx-auto">
@@ -32,8 +42,10 @@ export default function Clinic({ data }) {
           type="text"
           className="border border-slate-600 rounded p-2 w-full"
           placeholder="Search for a clinic..."
-          value={query.name}
-          onChange={(e) => handleChange("name", e.target.value)}
+          value={debouncedName}
+          onChange={(e) => {
+            setDebouncedName(e.target.value);
+          }}
         />
       </div>
       <div>

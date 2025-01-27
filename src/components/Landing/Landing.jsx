@@ -12,7 +12,10 @@ export default function Landing() {
         client side
       </Link>
       <Link href="/clinic" className="underline underline-offset-1">
-        Clinic
+        Clinic(data fetching, search, pagination, debouncing)
+      </Link>
+      <Link href="/gallary" className="underline underline-offset-1">
+        Image gallary
       </Link>
     </div>
   );

@@ -17,6 +17,9 @@ export default function Landing() {
       <Link href="/gallary" className="underline underline-offset-1">
         Image gallary
       </Link>
+      <Link href="/ssg" className="underline underline-offset-1">
+        Static Site Generation
+      </Link>
     </div>
   );
 }

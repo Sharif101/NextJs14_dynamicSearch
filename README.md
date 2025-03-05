@@ -1,36 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🟢
+⚡ কেন আমরা generateStaticParams ব্যবহার করছি?
+1️⃣ ডাইনামিক রুটের জন্য স্ট্যাটিক HTML পেজ তৈরি করতে
 
-## Getting Started
+ধরুন, আমাদের /user/[id] নামে একটি ডাইনামিক রুট আছে।
+generateStaticParams এই রুটের জন্য আগেই বিভিন্ন id এর পেজ প্রি-জেনারেট করবে।
+ফলে প্রতি রিকোয়েস্টে API-তে কল লাগবে না, পেজ লোড হবে অনেক দ্রুত।
+2️⃣ SEO এবং পারফরম্যান্স বাড়াতে
 
-First, run the development server:
+যেহেতু Next.js আগেই পেজ তৈরি করে রাখবে, তাই SEO ভালো হবে এবং পেজ লোডিং স্পিড অনেক দ্রুত হবে।
+3️⃣ প্রতি রিকোয়েস্টে API কল না করে ডাটা আগেই লোড করা যায়
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+এটি Server-Side Rendering (SSR) থেকে অনেক ভালো যদি ডাটা বেশি পরিবর্তন না হয়।
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🔹 কীভাবে এটি কাজ করে?
+যখন Next.js অ্যাপ বিল্ড হয়, তখন:
+1️⃣ generateStaticParams API থেকে সকল ইউজারের আইডি (id) ফেচ করে।
+2️⃣ তারপর এই আইডিগুলো ব্যবহার করে Next.js প্রতিটি পেজ তৈরি করে (/user/1, /user/2, /user/3 ইত্যাদি)।
+3️⃣ যখন ইউজার /user/1 পেজে যাবে, তখন সরাসরি স্ট্যাটিক HTML দেখানো হবে, নতুন API রিকোয়েস্ট লাগবে না।
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+সংক্ষেপে:
+generateStaticParams = ডাইনামিক পেজ আগে থেকেই তৈরি করা হয়
+বিল্ড টাইমে API থেকে ডাটা নিয়ে, Next.js সেই অনুযায়ী পেজ বানিয়ে নেয়
+ফলাফল = ফাস্ট লোডিং + SEO ফ্রেন্ডলি + কম API কল

@@ -5,5 +5,6 @@ import Todo from "./Todo/Todo";
 import Clinic from "./Clinic/Clinic";
 import Gallary from "./Gallary/Gallary";
 import SSG from "./SSG/SSG";
+import ISR from "./ISR/ISR";
 
-export { Landing, Blog, User, Todo, Clinic, Gallary, SSG };
+export { Landing, Blog, User, Todo, Clinic, Gallary, SSG, ISR };

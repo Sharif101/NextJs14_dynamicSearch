@@ -20,6 +20,9 @@ export default function Landing() {
       <Link href="/ssg" className="underline underline-offset-1">
         Static Site Generation
       </Link>
+      <Link href="/isr" className="underline underline-offset-1">
+        incremental Static Regeneration (ISR)
+      </Link>
     </div>
   );
 }
